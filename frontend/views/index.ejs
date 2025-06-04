@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Enregistreur audio</title>
+  <script src="/js/recorder.js" defer></script>
+</head>
+<body>
+  <h1>Enregistreur audio</h1>
+
+  <button id="startBtn">Démarrer</button>
+  <button id="stopBtn" disabled>Arrêter</button>
+  <audio id="audioPlayback" controls></audio>
+
+  <h2>Enregistrements</h2>
+  <ul id="recordingsList">
+    <% recordings.forEach(r => { %>
+      <li>
+        <a href="<%= r.url %>" target="_blank"><%= r.filename %></a>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>
