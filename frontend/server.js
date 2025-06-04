@@ -6,6 +6,8 @@ app.use(cors());
 const PORT = 3000;
 
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Vue EJS
 app.set('view engine', 'ejs');
@@ -22,11 +24,12 @@ app.get('/informations', (req, res) => {
 
 app.post('/informations', (req, res) => {
   // Enregistrement des infos du formulaire
-  res.redirect('/recording');
+  res.redirect(`/recording/${req.body.nbPhrases || 5}`);
 });
 
-app.get('/recording', (req, res) => {
-  res.render('recording');
+app.get('/recording/:nbPhrases', (req, res) => {
+  const nbPhrases = parseInt(req.params.nbPhrases, 10) || 5;
+  res.render('recording', { nbPhrases });
 });
 
 app.listen(PORT, () => {
