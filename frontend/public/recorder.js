@@ -6,22 +6,34 @@ const stopBtn = document.getElementById('stopBtn');
 const audioPlayback = document.getElementById('audioPlayback');
 
 startBtn.addEventListener('click', async () => {
-  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  mediaRecorder = new MediaRecorder(stream);
+
+    try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    // ...reste du code...
+  } catch (err) {
+    alert("Erreur d'accès au micro : " + err.message);
+    console.error(err);
+    return;
+  }
+
+
+  mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm;codecs=opus' });
   audioChunks = [];
 
   mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
 
   mediaRecorder.onstop = async () => {
     const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+    console.log('Taille du blob audio :', audioBlob.size); // Ajoute cette ligne
     audioPlayback.src = URL.createObjectURL(audioBlob);
 
     const formData = new FormData();
-    formData.append('audio', audioBlob, 'enregistrement.webm');
+    formData.append('audio', audioBlob);
 
-
-
-    window.location.reload(); // recharge pour voir la liste mise à jour
+    await fetch('http://localhost:4000/api/upload', {
+      method: 'POST',
+      body: formData
+    });
   };
 
   mediaRecorder.start();

@@ -2,23 +2,54 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Enregistreur audio</title>
-  <script src="/js/recorder.js" defer></script>
+  <title>Bienvenue sur audio-collect</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f6f8fa;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 32px 40px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px #0001;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 18px;
+    }
+    .start-btn {
+      margin-top: 24px;
+      padding: 12px 32px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 6px;
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .start-btn:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <h1>Enregistreur audio</h1>
-
-  <button id="startBtn">Démarrer</button>
-  <button id="stopBtn" disabled>Arrêter</button>
-  <audio id="audioPlayback" controls></audio>
-
-  <h2>Enregistrements</h2>
-  <ul id="recordingsList">
-    <% recordings.forEach(r => { %>
-      <li>
-        <a href="<%= r.url %>" target="_blank"><%= r.filename %></a>
-      </li>
-    <% }) %>
-  </ul>
+  <div class="container">
+    <h1>Bienvenue sur audio-collect</h1>
+    <p>
+      Cette application vous invite à lire à voix haute quelques phrases pour contribuer à une collecte de voix anonyme.<br>
+      <strong>Aucune donnée personnelle n’est enregistrée.</strong>
+    </p>
+    <form action="/informations" method="get">
+      <button class="start-btn" type="submit">Commencer</button>
+    </form>
+  </div>
 </body>
 </html>

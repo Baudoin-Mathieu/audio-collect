@@ -1,20 +1,32 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const cors = require('cors');
+app.use(cors());
 const PORT = 3000;
 
-// Middleware static
-app.use('/js', express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 // Vue EJS
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', 'views');
 
-// Exemple : récupération depuis un backend API (à adapter)
-app.get('/', async (req, res) => {
-  const recordings = [];
 
-  res.render('index', { recordings });
+app.get('/',(req, res) => {
+  res.render('index');
+});
+
+app.get('/informations', (req, res) => {
+  res.render('informations');
+});
+
+app.post('/informations', (req, res) => {
+  // Enregistrement des infos du formulaire
+  res.redirect('/recording');
+});
+
+app.get('/recording', (req, res) => {
+  res.render('recording');
 });
 
 app.listen(PORT, () => {
